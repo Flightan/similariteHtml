@@ -29,6 +29,8 @@ public class Main {
             TagParser parser = new TagParser();
 
             new ParserDelegator().parse(reader, parser, true);
+
+            System.out.println(parser.resHtml);
         } catch (IOException e) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, e);
         } finally {
