@@ -1,68 +1,88 @@
 package calculsimilarite;
 
+import java.util.Enumeration;
 import javax.swing.text.*;
 import javax.swing.text.html.*;
+import javax.swing.text.html.HTML.Attribute;
 
-public class TagParser extends HTMLEditorKit.ParserCallback
-{
+public class TagParser extends HTMLEditorKit.ParserCallback {
+
     private int tabLevel = 1;
-    private int line = 1;
+
+    public StringBuilder resHtml = new StringBuilder();
 
     @Override
-    public void handleComment(char[] data, int pos)
-    {
-    	displayData(new String(data));
-    }
-
-    @Override
-    public void handleEndOfLineString(String eol)
-    {
-    	System.out.println( line++ );
+    public void handleComment(char[] data, int pos) {
+        //displayData(new String(data));
     }
 
     @Override
-    public void handleEndTag(HTML.Tag tag, int pos)
-    {
-    	tabLevel--;
-    	displayData("/" + tag);
+    public void handleEndOfLineString(String eol) {
+        // System.out.println( line++ );
     }
 
     @Override
-    public void handleError(String errorMsg, int pos)
-    {
-    	displayData(pos + ":" + errorMsg);
-    }
-
-    public void handleMutableTag(HTML.Tag tag, MutableAttributeSet a, int pos)
-    {
-    	displayData("mutable:" + tag + ": " + pos + ": " + a);
+    public void handleEndTag(HTML.Tag tag, int pos) {
+        tabLevel--;
+        // displayData("/" + tag);
     }
 
     @Override
-    public void handleSimpleTag(HTML.Tag tag, MutableAttributeSet a, int pos)
-    {
-    	displayData( tag + "::" + a );
+    public void handleError(String errorMsg, int pos) {
+        // On s'en fiche
+        // displayData(pos + ":" + errorMsg);
+    }
+
+    public void handleMutableTag(HTML.Tag tag, MutableAttributeSet a, int pos) {
+        // displayData("mutable:" + tag + ": " + pos + ": " + a);
+        Enumeration e = a.getAttributeNames();
+        while (e.hasMoreElements()) {
+            Object name = e.nextElement();
+            if (name == Attribute.HREF) {
+                Object value = a.getAttribute(name);
+                displayData("" + value);
+            }
+        }
     }
 
     @Override
-    public void handleStartTag(HTML.Tag tag, MutableAttributeSet a, int pos)
-    {
-    	displayData( tag + ":" + a );
-    	tabLevel++;
+    public void handleSimpleTag(HTML.Tag tag, MutableAttributeSet a, int pos) {
+        Enumeration e = a.getAttributeNames();
+        while (e.hasMoreElements()) {
+            Object name = e.nextElement();
+            if (name == Attribute.HREF) {
+                Object value = a.getAttribute(name);
+                displayData("" + value);
+            }
+        }
     }
 
     @Override
-    public void handleText(char[] data, int pos)
-    {
-    	displayData( new String(data) );
+    public void handleStartTag(HTML.Tag tag, MutableAttributeSet a, int pos) {
+        Enumeration e = a.getAttributeNames();
+        while (e.hasMoreElements()) {
+            Object name = e.nextElement();
+            if (name == Attribute.HREF) {
+                Object value = a.getAttribute(name);
+                displayData("" + value);
+            }
+        }
+        tabLevel++;
     }
 
-    private void displayData(String text)
-    {
-    	for (int i = 0; i < tabLevel; i++) {
+    @Override
+    public void handleText(char[] data, int pos) {
+        displayData(new String(data));
+    }
+
+    private void displayData(String text) {
+        /* Debug
+        for (int i = 0; i < tabLevel; i++) {
             System.out.print("\t");
         }
 
-    	System.out.println(text);
+        System.out.println(text);
+        */
+        resHtml.append(text).append(" ");
     }
 }
