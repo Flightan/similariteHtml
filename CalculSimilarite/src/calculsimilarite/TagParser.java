@@ -40,7 +40,7 @@ public class TagParser extends HTMLEditorKit.ParserCallback {
             Object name = e.nextElement();
             if (name == Attribute.HREF) {
                 Object value = a.getAttribute(name);
-                displayData("" + value);
+                resHtml.append(value);
             }
         }
     }
@@ -52,7 +52,7 @@ public class TagParser extends HTMLEditorKit.ParserCallback {
             Object name = e.nextElement();
             if (name == Attribute.HREF) {
                 Object value = a.getAttribute(name);
-                displayData("" + value);
+                resHtml.append(value);
             }
         }
     }
@@ -64,7 +64,7 @@ public class TagParser extends HTMLEditorKit.ParserCallback {
             Object name = e.nextElement();
             if (name == Attribute.HREF) {
                 Object value = a.getAttribute(name);
-                displayData("" + value);
+                resHtml.append(value);
             }
         }
         tabLevel++;
@@ -83,6 +83,9 @@ public class TagParser extends HTMLEditorKit.ParserCallback {
 
         System.out.println(text);
         */
-        resHtml.append(text).append(" ");
+        String[] result = text.split("\\s*[,;:.?!\"\']+\\s*");
+        for (String word : result) {
+             resHtml.append(word.toLowerCase()).append(" ");
+        }
     }
 }
