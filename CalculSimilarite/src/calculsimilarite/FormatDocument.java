@@ -15,15 +15,16 @@ public class FormatDocument {
 
     public String html;
 
-    public FormatDocument(String html) {
-        this.html = html;
+    public FormatDocument() {
     }
 
-    public void format(TreeMap<String, String> dico) {
+    public String format(String html, TreeMap<String, String> dico) {
         Scanner scanner = new Scanner(html);
 
         while (scanner.hasNext()) {
             System.out.println(scanner.next());
         }
+
+        return "";
     }
 }
