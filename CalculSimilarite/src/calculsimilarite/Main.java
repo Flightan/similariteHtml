@@ -23,6 +23,8 @@ public class Main {
      */
     public static void main(String[] args) {
         BufferedReader reader = null;
+        ParseDico dico = new ParseDico();
+        
         try {
             URL url = new URL(args[0]);
             reader = new BufferedReader(new InputStreamReader(url.openStream()));
