@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ParseDico {
     
-    private final File folder = new File("/Resources");
+    private final File folder = new File("Resources");
     public Map<String, String> dico = new TreeMap<String, String>();
 
     /**
