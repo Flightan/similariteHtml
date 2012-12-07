@@ -20,11 +20,21 @@ public class FormatDocument {
 
     public String format(String html, TreeMap<String, String> dico) {
         Scanner scanner = new Scanner(html);
+        StringBuilder formattedHtml = new StringBuilder();
 
         while (scanner.hasNext()) {
-            System.out.println(scanner.next());
-        }
+            String value = scanner.next();
+            String replaceValue = dico.get(value);
+            if (replaceValue != null) {
+                formattedHtml.append(replaceValue);
+            } else {
+                formattedHtml.append(value);
+            }
 
-        return "";
+            formattedHtml.append(" ");
+        }
+        scanner.close();
+        
+        return formattedHtml.toString();
     }
 }
